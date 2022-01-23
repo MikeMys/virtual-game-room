@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Registration Page</title>
+	</head>
+	<body>
+		<h1>Registration</h1>
+        <a href="http://localhost:3000/login">Login</a>
+		<form id="reg-form" method="POST">
+			<input type="text" autocomplete="off" id="name" placeholder="Name" />
+            <input type="text" autocomplete="off" id="email" placeholder="Email" />
+			<input type="password" autocomplete="off" id="password" placeholder="Password" />
+            <input type="password" autocomplete="off" id="confirmpassword" placeholder="Confirm Password" />
+			<input type="submit" value="Submit Form" />
+		</form>
+	</body>
+    <script>
+        const form = document.getElementById('reg-form')
+        form.addEventListener('submit', registerUser)
+
+        async function registerUser(event) {
+            event.preventDefault()
+            const name = document.getElementById('name').value; 
+            const email = document.getElementById('email').value; 
+            const password = document.getElementById('password').value.trim(); 
+            const confirm_password = document.getElementById('confirmpassword').value.trim(); 
+
+            const result = await fetch('/api/user/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password, 
+                    confirm_password
+                })
+            }).then((res) => res.json())
+        }
+    </script>
+</html>
